@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <link rel="stylesheet" href="./leaflet.css">
+  <link rel="stylesheet" href="./style.css">
+  <script  src="./leaflet.js"></script>
+  <script  src="./main.js"></script>
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"
+    integrity="sha512-1tScwpjXwwnm6tTva0l0/ZgM3rYNbdyMj5q6RSQMbNX6EUMhYDE3pMRGZaT41zHEvLoWEK7qFEJmZDOoDMU7/Q=="
+    crossorigin=""></script>
+  <title>hello leaflet</title>
+</head>
+<body onload="init()">
+    <div id="map"></div>  
+    <hr>
+    <div class="coords">
+      <div id="currLat"></div>
+      <div id="currLng"></div>
+    </div>
+</body>
+</html>
