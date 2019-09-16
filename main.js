@@ -14,45 +14,35 @@ function init() {
     lng: -1.669494,
   };
 
-  const zoomLevel = 12;
+  const zoomLevel = 13;
   const accessToken = 'pk.eyJ1Ijoic2FtZnJvbWZyYW5jZSIsImEiOiJjazBoenNpM3owN2N5M2hxcG5vc2FsNm1mIn0.RqjLQuhXOEazL8PH7uKDbw';
   map = L.map('map').setView([parcThabor.lat, parcThabor.lng], zoomLevel);
 
-  // const mainLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-  //   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-  //   maxZoom: 18,
-  //   id: 'mapbox.streets',
-  //   accessToken
-  // });
   const mainLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 });
   
   mainLayer.addTo(map);
-  // L.esri.basemapLayer('Streets').addTo(map);
-  // L.esri.basemapLayer('Topographic').addTo(map);
-  // L.esri.basemapLayer('Gray').addTo(map);
-  // L.esri.basemapLayer('Gray').addTo(map);
-  // L.esri.basemapLayer('DarkGray').addTo(map);
-  // L.esri.basemapLayer('Imagery').addTo(map);
-  // L.esri.basemapLayer('ImageryClarity').addTo(map);
-  // L.esri.basemapLayer('ImageryFirefly').addTo(map);
-  // L.esri.basemapLayer('ShadedRelief').addTo(map);
-  // L.esri.basemapLayer('Physical').addTo(map);
 
-  const options = { 
+  const parcThaborOptions = { 
     lat: parcThabor.lat, 
     lng: parcThabor.lng, 
     title: 'Parc du Thabor', 
     draggable: true
   };
 
-  addMarker(options, map);
+  addMarker(parcThaborOptions, map);
 
   const gareRennes = { 
     lat: 48.1033, 
-    lng: -1.6726 
+    lng: -1.6726, 
+    circle: {
+      color: 'green',
+      fillColor: '#42f5b0',
+      fillOpacity: 0.5,
+      radius: 500
+    }
   };
 
   const iconCustom = {
@@ -63,6 +53,8 @@ function init() {
   };
 
   addCustomMarker(iconCustom, map);
+
+  addCircle(gareRennes, map);
 }
 
 function addMarker(options, map) {
@@ -97,4 +89,14 @@ function showNewCoords(coords, marker) {
   marker
     .bindPopup(`lat: ${coords.lat} - lng: ${coords.lng}`)
     .openPopup();
+}
+
+function addCircle(options, map) {
+  var circle = L.circle([options.lat, options.lng], {
+    color: options.circle.color,
+    fillColor: options.circle.fillColor,
+    fillOpacity: options.circle.fillOpacity,
+    radius: options.circle.radius
+  });
+  circle.addTo(map);
 }
