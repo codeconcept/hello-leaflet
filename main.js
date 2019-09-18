@@ -7,16 +7,17 @@ let circleRange = null;
 let btnFindAdress = null
 let address = null;
 let coords = {};
+let chkEnableMapCLick = null
 
 function init() {
-  console.log('init');
   currLat =  document.getElementById('currLat');
   currLng = document.getElementById('currLng');
   circleRange = document.getElementById('circleRange');
   btnFindAdress = document.getElementById('btnFindAdress');
-
   btnFindAdress.addEventListener('click', findAddressByCoords);
   address = document.getElementById('address');
+  chkEnableMapCLick = document.getElementById('chkEnableMapCLick');
+  chkEnableMapCLick.addEventListener('change', toggleMapListening);
   
   // Rennes / Parc du Thabor : -1.669494 Lat 48.114384 Lng
   const parcThabor = {
@@ -135,6 +136,24 @@ function findAddressByCoords() {
       return;
     }
     address.innerText = result.address.Match_addr;
-    // L.marker(result.latlng).addTo(map).bindPopup(result.address.Match_addr).openPopup();
+  });
+}
+
+function toggleMapListening(event) {
+  console.log('change', event.target.checked);
+  if (event.target.checked) {
+    map.on('click', toggleAddMarkerAndReverseGeocode);
+  } else {
+    map.off('click', toggleAddMarkerAndReverseGeocode);
+  }
+}
+
+function toggleAddMarkerAndReverseGeocode(event) {
+  const geocodeService = L.esri.Geocoding.geocodeService();
+  geocodeService.reverse().latlng(event.latlng).run(function (error, result) {
+    if (error) {
+      return;
+    }
+    L.marker(result.latlng).addTo(map).bindPopup(result.address.Match_addr);
   });
 }
