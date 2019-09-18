@@ -83,6 +83,8 @@ function addMarker(options, map) {
   marker.addTo(map);
 
   marker.on('dragend', function(event) {
+    btnFindAdress.disabled = false;
+    address.innerText = '';
     coords = event.target._latlng;
     showNewCoords(event.target._latlng, event.target);
     if (followMarker) {
@@ -123,14 +125,15 @@ function addCircle(options, map) {
   circle.addTo(map);
 }
 
-function findAddressByCoords(event) {
+function findAddressByCoords() {
+  if(!coords) {
+    return;
+  }
   const geocodeService = L.esri.Geocoding.geocodeService();
   geocodeService.reverse().latlng(coords).run(function (error, result) {
     if (error) {
       return;
     }
-    console.log(result.address);
-    console.log(address)
     address.innerText = result.address.Match_addr;
     // L.marker(result.latlng).addTo(map).bindPopup(result.address.Match_addr).openPopup();
   });
